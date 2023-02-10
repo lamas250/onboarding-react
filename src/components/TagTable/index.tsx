@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Typography } from '@mui/material';
 
-export const TagTable = ({ tags }) => {
+export const TagTable = ({ tags }: any) => {
   return (
     <>
       <Typography component="h1" variant="h5">
