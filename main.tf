@@ -12,6 +12,6 @@ resource "vercel_project" "onboarding-react" {
   framework = "create-react-app"
   git_repository = {
     type = "github"
-    repo = "igorplank250/onboarding-react"
+    repo = "lamas250/onboarding-react"
   }
 }
