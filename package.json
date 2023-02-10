@@ -2,11 +2,12 @@
   "name": "onboarding-react",
   "private": false,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -14,8 +15,16 @@
     "@fontsource/roboto": "^4.5.8",
     "@mui/material": "^5.11.8",
     "@mui/styled-engine-sc": "^5.11.0",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
     "axios": "^1.3.2",
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
     "formik": "^2.2.9",
+    "prettier": "^2.8.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
