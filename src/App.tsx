@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './Router';
 import defaultTheme from './styles/theme/default';
+import 'react-toastify/dist/ReactToastify.css';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';

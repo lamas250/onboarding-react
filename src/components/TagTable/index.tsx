@@ -8,8 +8,21 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Typography } from '@mui/material';
+import DeleteOutlined from '@mui/icons-material/DeleteOutlined';
+import { axiosClient } from '../../infra/http/axios-http-client';
 
-export const TagTable = ({ tags }: any) => {
+export const TagTable = ({ tags, fetchTags }: any) => {
+  const deleteTag = async (id: any) => {
+    await axiosClient
+      .delete(`/onboarding/${id}`)
+      .then((res) => {
+        fetchTags();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <Typography component="h1" variant="h5">
@@ -22,6 +35,7 @@ export const TagTable = ({ tags }: any) => {
               <TableCell>TAGs</TableCell>
               <TableCell align="right">Value</TableCell>
               <TableCell align="right">Type</TableCell>
+              <TableCell align="right">Action</TableCell>
             </TableRow>
           </TableHead>
           {tags ? (
@@ -33,6 +47,9 @@ export const TagTable = ({ tags }: any) => {
                   </TableCell>
                   <TableCell align="right">{row.value}</TableCell>
                   <TableCell align="right">{row.type}</TableCell>
+                  <TableCell align="right">
+                    <DeleteOutlined onClick={() => deleteTag(row.id)} color="primary" />
+                  </TableCell>
                 </TableRow>
               </TableBody>
             ))

@@ -6,12 +6,13 @@ import { Button, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { axiosClient } from '../../infra/http/axios-http-client';
+import { toast } from 'react-toastify';
 
 export const TagForm = ({ fetchTags }: any) => {
   const formik = useFormik({
     initialValues: {
       tag: '',
-      value: 0,
+      value: '',
       type: '',
     },
     validationSchema: Yup.object({
@@ -20,16 +21,20 @@ export const TagForm = ({ fetchTags }: any) => {
       type: Yup.string().required('Required'),
     }),
     onSubmit: async (values, { resetForm }) => {
-      console.log(JSON.stringify(values, null, 2));
-      await axiosClient.post('/onboarding', values);
-      resetForm();
-      fetchTags();
+      await axiosClient
+        .post('/onboarding', values)
+        .then((res) => {
+          resetForm();
+          fetchTags();
+          toast.success('Tag criada com sucesso');
+        })
+        .catch((err) => toast.error('Falha no servidor'));
     },
   });
 
   return (
     <>
-      <Typography component="h1" variant="h5">
+      <Typography component="h1" variant="h5" data-testid="form-title">
         Onboarding Form
       </Typography>
       <Box
@@ -55,7 +60,7 @@ export const TagForm = ({ fetchTags }: any) => {
           value={formik.values.tag}
           sx={{ width: { sm: 400 } }}
         />
-        {formik.errors.tag ? <p style={{ color: 'red' }}>{formik.errors.tag}</p> : null}
+        {formik.errors.tag ? <p style={{ color: 'red', margin: 'auto' }}>{formik.errors.tag}</p> : null}
         <TextField
           margin="normal"
           required
@@ -68,7 +73,7 @@ export const TagForm = ({ fetchTags }: any) => {
           value={formik.values.value}
           sx={{ width: { sm: 400 } }}
         />
-        {formik.errors.value ? <div>{formik.errors.value}</div> : null}
+        {formik.errors.value ? <p style={{ color: 'red', margin: 'auto' }}>{formik.errors.value}</p> : null}
         <TextField
           margin="normal"
           required
@@ -80,8 +85,14 @@ export const TagForm = ({ fetchTags }: any) => {
           value={formik.values.type}
           sx={{ width: { sm: 400 } }}
         />
-        {formik.errors.type ? <p style={{ color: 'red' }}>{formik.errors.type}</p> : null}
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, width: { sm: 400 } }}>
+        {formik.errors.type ? <p style={{ color: 'red', margin: 'auto' }}>{formik.errors.type}</p> : null}
+        <Button
+          type="submit"
+          data-testid="button-submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2, width: { sm: 400 } }}
+        >
           CREATE
         </Button>
         <Button

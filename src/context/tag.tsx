@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { axiosClient } from '../infra/http/axios-http-client';
 
-export interface TagProps {
+export interface ITagProperties {
   id: string;
   tag: string;
   value: number;
@@ -10,18 +10,24 @@ export interface TagProps {
 }
 
 export type TagContextType = {
-  tags: TagProps[];
+  tags: ITagProperties[];
   fetchTags: () => Promise<void>;
 };
 
 const TagContext = createContext<TagContextType | null>(null);
 
 const TagProvider = ({ children }: any) => {
-  const [tags, setTags] = useState<TagProps[]>([]);
+  const [tags, setTags] = useState<ITagProperties[]>([]);
 
   const fetchTags = async () => {
-    const res = await axiosClient.get('/onboarding');
-    setTags(res.data);
+    await axiosClient
+      .get('/onboarding')
+      .then((res) => {
+        setTags(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
